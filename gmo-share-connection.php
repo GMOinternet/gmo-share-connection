@@ -47,25 +47,25 @@ private $buttons = array(
         'label' => 'Facebook',
         'small_icon'  => 'example.png',
         'large_icon'  => 'example.png',
-        'html'  => '<a href="http://www.facebook.com/sharer.php?u=%1$s&amp;t=%2$s">%3$s</a>',
+        'html'  => '<a href="http://www.facebook.com/sharer.php?u=%1$s&amp;t=%2$s" title="Facebook">%3$s</a>',
     ),
     'twitter'  => array(
         'label' => 'Twitter',
         'small_icon' => 'example.png',
         'large_icon' => 'example.png',
-        'html'  => '<a href="http://twitter.com/share?url=%1$s&text=%2$s">%3$s</a>',
+        'html'  => '<a href="http://twitter.com/share?url=%1$s&text=%2$s" title="Twitter">%3$s</a>',
     ),
     'google'  => array(
         'label' => 'Google',
         'small_icon'  => 'example.png',
         'large_icon'  => 'example.png',
-        'html'  => '<a href="https://plus.google.com/share?url=%1$s">%3$s</a>',
+        'html'  => '<a href="https://plus.google.com/share?url=%1$s" title="Google">%3$s</a>',
     ),
     'hatena'  => array(
         'label' => 'Hatena',
         'small_icon'  => 'example.png',
         'large_icon'  => 'example.png',
-        'html'  => '<a href="http://b.hatena.ne.jp/entry/%1$s" title="%2$s">%3$s</a>',
+        'html'  => '<a href="http://b.hatena.ne.jp/entry/%1$s" title="Hatena">%3$s</a>',
     ),
 );
 
