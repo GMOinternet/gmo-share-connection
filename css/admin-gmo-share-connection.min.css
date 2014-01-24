@@ -1,0 +1,11 @@
+/**
+ * GMO Share Connection - v0.1.0
+ *
+ * https://digitalcube.jp/
+ * 
+ *
+ * Copyright 2014, Digitalcube Co,.Ltd (https://digitalcube.jp/)
+ * Released under the GPLv2
+ */
+
+#gmo-share-connection label{margin-right:2em}#gmo-share-connection .gmo-share-connection-buttons-wrap{overflow:auto;width:100%}#gmo-share-connection .gmo-share-connection-buttons-wrap .gmo-share-connection-button-wrap{overflow:auto}@media screen and (max-width:782px){#gmo-share-connection .gmo-share-connection-buttons-wrap .gmo-share-connection-button-wrap{float:none;width:100%}}#gmo-share-connection .gmo-share-connection-buttons-wrap .gmo-share-connection-button-wrap .gmo-share-connection-button-inner{margin-right:1em;margin-bottom:1em}@media screen and (max-width:782px){#gmo-share-connection .gmo-share-connection-buttons-wrap .gmo-share-connection-button-wrap .gmo-share-connection-button-inner{margin:0}}#gmo-share-connection .gmo-share-connection-buttons-wrap .gmo-share-connection-button-wrap .gmo-share-connection-button-inner .gmo-share-connection-buttons{background-color:#fff;border:1px splid #e5e5e5;border-radius:5px;padding:10px;overflow:auto}#gmo-share-connection .gmo-share-connection-buttons-wrap .gmo-share-connection-button-wrap .gmo-share-connection-button-inner .btn-preview{height:40px;line-height:40px;overflow:auto;border:1px solid #dedede;border-radius:5px;padding:0 8px;margin-right:8px;cursor:move;width:120px;float:left;position:relative}#gmo-share-connection .gmo-share-connection-buttons-wrap .gmo-share-connection-button-wrap .gmo-share-connection-button-inner .btn-preview img{display:block;float:left;width:24px;height:24px;margin:8px 5px 8px 0}#gmo-share-connection .gmo-share-connection-buttons-wrap .gmo-share-connection-button-wrap .gmo-share-connection-button-inner .btn-preview .close{position:absolute;top:-8px;right:4px;display:none;text-decoration:none}#gmo-share-connection .gmo-share-connection-buttons-wrap .gmo-share-connection-button-wrap .gmo-share-connection-button-inner #btn-active .close{display:block}

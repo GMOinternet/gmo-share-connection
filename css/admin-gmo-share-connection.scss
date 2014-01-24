@@ -1,0 +1,85 @@
+#gmo-share-connection
+{
+    $wpadmin-border-color: #e5e5e5;
+    $wpadmin-background-color: #fafafa;
+    $wpadmin-break-point: 782px;
+
+    label
+    {
+        margin-right: 2em;
+    }
+
+    .gmo-share-connection-buttons-wrap
+    {
+        overflow: auto;
+        width: 100%;
+
+        .gmo-share-connection-button-wrap
+        {
+            overflow: auto;
+
+            @media screen and (max-width: $wpadmin-break-point)
+            {
+                float: none;
+                width: 100%;
+            }
+
+            .gmo-share-connection-button-inner
+            {
+                margin-right: 1em;
+                margin-bottom: 1em;
+
+                @media screen and (max-width: $wpadmin-break-point)
+                {
+                    margin: 0;
+                }
+
+                .gmo-share-connection-buttons
+                {
+                    background-color: #ffffff;
+                    border: 1px splid $wpadmin-border-color;
+                    border-radius: 5px;
+                    padding: 10px;
+                    overflow: auto;
+                }
+                .btn-preview
+                {
+                    height: 40px;
+                    line-height: 40px;
+                    overflow: auto;
+                    border: 1px solid #dedede;
+                    border-radius: 5px;
+                    padding: 0 8px;
+                    margin-right: 8px;
+                    cursor: move;
+                    width: 120px;
+                    float: left;
+                    position: relative;
+
+                    img
+                    {
+                        display: block;
+                        float: left;
+                        width: 24px;
+                        height: 24px;
+                        margin: 8px 5px 8px 0;
+                    }
+
+                    .close
+                    {
+                        position: absolute;
+                        top: -8px;
+                        right: 4px;
+                        display: none;
+                        text-decoration: none;
+                    }
+                }
+                #btn-active .close
+                {
+                    display: block;
+                }
+            }
+        }
+    }
+}
+
