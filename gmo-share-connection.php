@@ -45,18 +45,27 @@ private $langs   = '';
 private $buttons = array(
     'facebook'  => array(
         'label' => 'Facebook',
-        'icon'  => 'example.png',
-        'html'  => '<div class="%s">facebook</div>',
+        'small_icon'  => 'example.png',
+        'large_icon'  => 'example.png',
+        'html'  => '<a href="http://www.facebook.com/sharer.php?u=%1$s&amp;t=%2$s">%3$s</a>',
     ),
     'twitter'  => array(
         'label' => 'Twitter',
-        'icon'  => 'example.png',
-        'html'  => '<div class="%s">Twitter</div>',
+        'small_icon' => 'example.png',
+        'large_icon' => 'example.png',
+        'html'  => '<a href="http://twitter.com/share?url=%1$s&text=%2$s">%3$s</a>',
     ),
     'google'  => array(
         'label' => 'Google',
-        'icon'  => 'example.png',
-        'html'  => '<div class="%s">Google</div>',
+        'small_icon'  => 'example.png',
+        'large_icon'  => 'example.png',
+        'html'  => '<a href="https://plus.google.com/share?url=%1$s">%3$s</a>',
+    ),
+    'hatena'  => array(
+        'label' => 'Hatena',
+        'small_icon'  => 'example.png',
+        'large_icon'  => 'example.png',
+        'html'  => '<a href="http://b.hatena.ne.jp/entry/%1$s" title="%2$s">%3$s</a>',
     ),
 );
 
@@ -88,6 +97,35 @@ public function plugins_loaded()
     add_action('admin_menu', array($this, 'admin_menu'));
     add_action('admin_init', array($this, 'admin_init'));
     add_filter('the_content', array($this, 'the_content'), 9);
+    add_action('wp_footer', array($this, 'wp_footer'));
+}
+
+public function wp_footer()
+{
+    if (is_single() && get_option('gmo_share_connection_single', 1)) {
+        // continue
+    } elseif (is_page() && get_option('gmo_share_connection_page', 1)) {
+        // continue
+    } else {
+        return;
+    }
+
+?>
+<script type="text/javascript">
+(function($){
+
+    $('.gmo-shares a').click(function(){
+        window.open(
+            $(this).attr('href'),
+            'gmoshare',
+            'menubar=1,resizable=1,width=600,height=350'
+        );
+        return false;
+    });
+
+})(jQuery);
+</script>
+<?php
 }
 
 public function the_content($contents)
@@ -101,26 +139,23 @@ public function the_content($contents)
     }
 
     $html = '';
-
-    $btns = $this->get_active_buttons();
-    $btn_contents = array();
-    foreach ($btns as $btn) {
-        $buttons = $this->get_buttons();
-        $btn_contents[] = $buttons[$btn]['html'];
-    }
-
+    $share = $this->get_share_contents();
     if (get_option('gmo_share_connection_before_content')) {
-        $html .= '<div id="gmo-shares-before-contents" class="gmo-shares">';
-        $html .= '<div class="share">'.join('</div><div class="share">', $btn_contents).'</div>';
-        $html .= '</div>';
+        if ($share) {
+            $html .= '<ul id="gmo-share-before-contents" class="gmo-shares">';
+            $html .= $share;
+            $html .= '</ul>';
+        }
     }
 
     $html .= $contents;
 
     if (get_option('gmo_share_connection_after_content')) {
-        $html .= '<div id="gmo-shares-after-contents" class="gmo-shares">';
-        $html .= '<div class="share">'.join('</div><div class="share">', $btn_contents).'</div>';
-        $html .= '</div>';
+        if ($share) {
+            $html .= '<ul id="gmo-share-after-contents" class="gmo-shares">';
+            $html .= $share;
+            $html .= '</ul>';
+        }
     }
 
     return $html;
@@ -252,7 +287,7 @@ public function options_page()
         }
 ?>
         <li data-social="<?php echo esc_attr($id); ?>" class="btn-preview" <?php echo $hide; ?>>
-            <img src="<?php echo plugins_url('img/'.$btn['icon'], __FILE__); ?>" alt="" />
+            <img src="<?php echo plugins_url('img/'.$btn['small_icon'], __FILE__); ?>" alt="" />
             <?php echo esc_html($btn['label']); ?>
             <a href="javascript:void(0);" class="close" data-action="<?php echo esc_attr($id); ?>">&times;</a>
         </li>
@@ -272,7 +307,7 @@ public function options_page()
         $btn = $buttons[$id];
 ?>
         <li data-social="<?php echo esc_attr($id); ?>" class="btn-preview">
-            <img src="<?php echo plugins_url('img/'.$btn['icon'], __FILE__); ?>" alt="" />
+            <img src="<?php echo plugins_url('img/'.$btn['small_icon'], __FILE__); ?>" alt="" />
             <?php echo esc_html($btn['label']); ?>
             <a href="javascript:void(0);" class="close" data-action="<?php echo esc_attr($id); ?>">&times;</a>
         </li>
@@ -310,6 +345,31 @@ public function admin_enqueue_scripts()
             true
         );
     }
+}
+
+private function get_share_contents()
+{
+    $btns = $this->get_active_buttons();
+    if (!count($btns)) {
+        return;
+    }
+
+    $btn_contents = array();
+    foreach ($btns as $btn) {
+        $buttons = $this->get_buttons();
+        $btn_contents[] = sprintf(
+            $buttons[$btn]['html'],
+            esc_attr(esc_url(apply_filters('the_permalink', get_permalink()))),
+            esc_attr(get_the_title()),
+            '<img src="'.plugins_url('img/'.$buttons[$btn]['large_icon'], __FILE__).'" alt="" />'
+        );
+    }
+
+    $html = '<li class="social">';
+    $html .= join('</li><li class="social">', $btn_contents);
+    $html .= '</li>';
+
+    return $html;
 }
 
 private function get_buttons()
