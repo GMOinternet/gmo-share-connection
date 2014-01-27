@@ -45,27 +45,49 @@ private $langs   = '';
 private $buttons = array(
     'facebook'  => array(
         'label' => 'Facebook',
-        'small_icon'  => 'example.png',
-        'large_icon'  => 'example.png',
-        'html'  => '<a href="http://www.facebook.com/sharer.php?u=%1$s&amp;t=%2$s" title="Facebook">%3$s</a>',
+        'small_icon'  => 'facebook',
+        'html'  => '<a rel="nofollow" href="http://www.facebook.com/sharer.php?u=%1$s&amp;t=%2$s" title="Share on Facebook">%3$s</a>',
     ),
     'twitter'  => array(
         'label' => 'Twitter',
-        'small_icon' => 'example.png',
-        'large_icon' => 'example.png',
-        'html'  => '<a href="http://twitter.com/share?url=%1$s&text=%2$s" title="Twitter">%3$s</a>',
+        'small_icon' => 'twitter',
+        'html'  => '<a rel="nofollow" href="http://twitter.com/share?url=%1$s&text=%2$s" title="Share on Twitter">%3$s</a>',
+    ),
+    'pinterest'  => array(
+        'label' => 'Pinterest',
+        'small_icon'  => 'pinterest',
+        'html'  => '<a rel="nofollow" href="http://pinterest.com/pin/create/button/?url=%1$s&description=%2$s&media=%4$s" title="Share on Pinterest">%3$s</a>',
+    ),
+    'linkedin'  => array(
+        'label' => 'LinkedIn',
+        'small_icon'  => 'linkedin',
+        'html'  => '<a rel="nofollow" href="http://www.linkedin.com/cws/share?url=%1$stoken=&isFramed=false" title="Share on LinkedIn">%3$s</a>',
     ),
     'google'  => array(
-        'label' => 'Google',
-        'small_icon'  => 'example.png',
-        'large_icon'  => 'example.png',
-        'html'  => '<a href="https://plus.google.com/share?url=%1$s" title="Google">%3$s</a>',
+        'label' => 'Google+',
+        'small_icon'  => 'google-plus',
+        'html'  => '<a rel="nofollow" href="https://plus.google.com/share?url=%1$s" title="Share on Google+">%3$s</a>',
     ),
-    'hatena'  => array(
-        'label' => 'Hatena',
-        'small_icon'  => 'example.png',
-        'large_icon'  => 'example.png',
-        'html'  => '<a href="http://b.hatena.ne.jp/entry/%1$s" title="Hatena">%3$s</a>',
+    'tumblr'  => array(
+        'label' => 'Tumblr',
+        'small_icon'  => 'tumblr',
+        'html'  => '<a href="http://www.tumblr.com/share/link?url=%1$s&name=%2$s" title="Share on Tumblr">%3$s</a>',
+    ),
+    'reddit'  => array(
+        'label' => 'Reddit',
+        'small_icon'  => 'reddit',
+        'html'  => '<a href="http://reddit.com/submit?url=%1$s&title=%2$s" title="Share on Reddit">%3$s</a>',
+    ),
+    'delicious'  => array(
+        'label' => 'Delicious',
+        'small_icon'  => 'delicious',
+        'html'  => '<a href="https://delicious.com/save?v=5&provider=GMOShareConnection&noui&jump=close&url=%1$s&title=%2$s" title="Share on Delicious">%3$s</a>',
+    ),
+
+    'stumbleupon'  => array(
+        'label' => 'StumbleUpon',
+        'small_icon'  => 'stumbleupon',
+        'html'  => '<a rel="nofollow" href="http://www.stumbleupon.com/submit?url=%1$s&title=%2$s" title="Share on StumbleUpon">%3$s</a>',
     ),
 );
 
@@ -97,6 +119,7 @@ public function plugins_loaded()
     add_action('admin_menu', array($this, 'admin_menu'));
     add_action('admin_init', array($this, 'admin_init'));
     add_filter('the_content', array($this, 'the_content'), 9);
+    add_action('tidy_after_entry_meta', array($this, 'tidy_after_entry_meta'));
     add_action('wp_footer', array($this, 'wp_footer'));
 }
 
@@ -106,6 +129,8 @@ public function wp_footer()
         // continue
     } elseif (is_page() && get_option('gmo_share_connection_page', 1)) {
         // continue
+    } elseif ( is_front_page() && get_option('gmo_share_connection_home', 1)) {
+        // continue
     } else {
         return;
     }
@@ -113,7 +138,6 @@ public function wp_footer()
 ?>
 <script type="text/javascript">
 (function($){
-
     $('.gmo-shares a').click(function(){
         window.open(
             $(this).attr('href'),
@@ -160,6 +184,23 @@ public function the_content($contents)
 
     return $html;
 }
+public function tidy_after_entry_meta() {
+    if (is_home() && get_option('gmo_share_connection_home', 1)) {
+        // continue
+    } else {
+        return;
+    }
+
+    $html = '';
+    $share = $this->get_share_contents();
+    if ($share) {
+        $html .= '<ul id="gmo_share_connection_home" class="gmo-shares">';
+        $html .= $share;
+        $html .= '</ul>';
+    }
+
+    echo $html;
+}
 
 public function admin_init()
 {
@@ -187,6 +228,12 @@ public function admin_init()
                 update_option('gmo_share_connection_page', 1);
             } else {
                 update_option('gmo_share_connection_page', 0);
+            }
+
+            if (isset($_POST['gmo_share_connection_home']) && $_POST['gmo_share_connection_home']) {
+                update_option('gmo_share_connection_home', 1);
+            } else {
+                update_option('gmo_share_connection_home', 0);
             }
 
             if (isset($_POST['social']) && is_array($_POST['social'])) {
@@ -269,6 +316,20 @@ public function options_page()
 
         </td>
     </tr>
+    <tr>
+        <th><?php _e('Home', 'gmo_share_connection'); ?></th>
+        <td>
+
+<?php if (get_option('gmo_share_connection_home', 1)): ?>
+            <label><input type="radio" name="gmo_share_connection_home" value="1" checked> Yes</label>
+            <label><input type="radio" name="gmo_share_connection_home" value="0"> No</label>
+<?php else: ?>
+            <label><input type="radio" name="gmo_share_connection_home" value="1"> Yes</label>
+            <label><input type="radio" name="gmo_share_connection_home" value="0" checked> No</label>
+<?php endif; ?>
+
+        </td>
+    </tr>
 </tbody>
 </table>
 
@@ -287,7 +348,7 @@ public function options_page()
         }
 ?>
         <li data-social="<?php echo esc_attr($id); ?>" class="btn-preview" <?php echo $hide; ?>>
-            <img src="<?php echo plugins_url('img/'.$btn['small_icon'], __FILE__); ?>" alt="" />
+        	<span class="icon icon-<?php echo esc_attr($btn['small_icon']); ?>"></span>
             <?php echo esc_html($btn['label']); ?>
             <a href="javascript:void(0);" class="close" data-action="<?php echo esc_attr($id); ?>">&times;</a>
         </li>
@@ -307,7 +368,7 @@ public function options_page()
         $btn = $buttons[$id];
 ?>
         <li data-social="<?php echo esc_attr($id); ?>" class="btn-preview">
-            <img src="<?php echo plugins_url('img/'.$btn['small_icon'], __FILE__); ?>" alt="" />
+        	<span class="icon icon-<?php echo esc_attr($btn['small_icon']); ?>"></span>
             <?php echo esc_html($btn['label']); ?>
             <a href="javascript:void(0);" class="close" data-action="<?php echo esc_attr($id); ?>">&times;</a>
         </li>
@@ -330,9 +391,17 @@ public function admin_enqueue_scripts()
 {
     if (isset($_GET['page']) && $_GET['page'] === 'gmo-share-connection') {
         wp_enqueue_style(
+            'iconmoon-tidy',
+            plugins_url('iconmoon-tidy/style.css', __FILE__),
+            array(),
+            $this->version,
+            'all'
+        );
+
+        wp_enqueue_style(
             'admin-gmo-share-connection-style',
             plugins_url('css/admin-gmo-share-connection.min.css', __FILE__),
-            array(),
+            array('iconmoon-tidy'),
             $this->version,
             'all'
         );
@@ -353,15 +422,31 @@ private function get_share_contents()
     if (!count($btns)) {
         return;
     }
-
     $btn_contents = array();
     foreach ($btns as $btn) {
         $buttons = $this->get_buttons();
+
+		$args = array(
+			'post_type' => 'attachment',
+			'numberposts' => -1,
+			'post_status' => null,
+			'post_parent' => get_the_id()
+			); 
+		$attachments = get_posts($args);
+		if ($attachments) {
+			foreach ($attachments as $attachment) {
+				$thumb = wp_get_attachment_image_src($attachment->ID, 'full', false);
+				$thumb = $thumb[0];
+			}
+		} else {
+			$thumb = plugins_url('img/tidy-thumb-small.png', __FILE__);
+		}
         $btn_contents[] = sprintf(
             $buttons[$btn]['html'],
-            esc_attr(esc_url(apply_filters('the_permalink', get_permalink()))),
+            urlencode(esc_attr(esc_url(apply_filters('the_permalink', get_permalink())))),
             esc_attr(get_the_title()),
-            '<img src="'.plugins_url('img/'.$buttons[$btn]['large_icon'], __FILE__).'" alt="" />'
+            '<span class="icon icon-' . $buttons[$btn]['small_icon'] . '"></span>',
+            $thumb
         );
     }
 
@@ -388,12 +473,20 @@ private function get_active_buttons()
 public function wp_enqueue_scripts()
 {
     wp_enqueue_style(
-        'gmo-share-connection-style',
-        plugins_url('css/gmo-share-connection.min.css', __FILE__),
+        'iconmoon-tidy',
+        plugins_url('iconmoon-tidy/style.css', __FILE__),
         array(),
         $this->version,
         'all'
     );
+    wp_enqueue_style(
+        'gmo-share-connection-style',
+        plugins_url('css/gmo-share-connection.min.css', __FILE__),
+        array('iconmoon-tidy'),
+        $this->version,
+        'all'
+    );
+    wp_enqueue_script('jquery');
 }
 
 } // end class GMO_Share_Connection
