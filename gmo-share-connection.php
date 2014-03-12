@@ -129,7 +129,7 @@ public function wp_footer()
         // continue
     } elseif (is_page() && get_option('gmo_share_connection_page', 1)) {
         // continue
-    } elseif ( is_front_page() && get_option('gmo_share_connection_home', 1)) {
+    } elseif ( ( is_front_page() || is_home() ) && get_option('gmo_share_connection_home', 1)) {
         // continue
     } else {
         return;
@@ -185,7 +185,7 @@ public function the_content($contents)
     return $html;
 }
 public function tidy_after_entry_meta() {
-    if (is_home() && get_option('gmo_share_connection_home', 1)) {
+    if ( ( is_front_page() || is_home() ) && get_option('gmo_share_connection_home', 1)) {
         // continue
     } else {
         return;
