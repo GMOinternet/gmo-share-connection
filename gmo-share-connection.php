@@ -187,6 +187,8 @@ public function the_content($contents)
 public function tidy_after_entry_meta() {
     if ( ( is_front_page() || is_home() ) && get_option('gmo_share_connection_home', 1)) {
         // continue
+    } elseif ( is_tax( 'post_format', 'post-format-gallery' ) ) {
+        // continue
     } else {
         return;
     }
