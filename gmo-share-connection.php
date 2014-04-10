@@ -1,11 +1,11 @@
 <?php
 /**
  * Plugin Name: GMO Share Connection
- * Plugin URI:  https://digitalcube.jp/
- * Description: This is a awesome cool plugin.
+ * Plugin URI:  
+ * Description: GMO Share Connection plugin is designed for easy social sharing by letting user choose place/pages to use icons. 9 social network services are supported in this plugin including Facebook and Twitter.
  * Version:     0.1.0
- * Author:      Digitalcube Co,.Ltd
- * Author URI:  https://digitalcube.jp/
+ * Author:      WP Shop byGMO
+ * Author URI:  http://www.wpshop.com
  * License:     GPLv2
  * Text Domain: gmo_share_connection
  * Domain Path: /languages
