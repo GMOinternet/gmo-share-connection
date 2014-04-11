@@ -1,12 +1,12 @@
 {
   "name": "gmo-share-connection",
   "title": "GMO Share Connection",
-  "description": "This is a awesome cool plugin.",
-  "version": "0.1.0",
-  "homepage": "https://digitalcube.jp/",
+  "description": "GMO Share Connection plugin is designed for easy social sharing by letting user choose place/pages to use icons. 9 social network services are supported in this plugin including Facebook and Twitter.",
+  "version": "1.0",
+  "homepage": "https://github.com/GMOinternet/gmo-share-connection",
   "author": {
-    "name": "Digitalcube Co,.Ltd",
-    "url": "https://digitalcube.jp/"
+    "name": "WP Shop byGMO",
+    "url": "http://www.wpshop.com"
   },
   "devDependencies": {
     "grunt": "~0.4.1",

@@ -3,7 +3,7 @@
  * Plugin Name: GMO Share Connection
  * Plugin URI:  
  * Description: GMO Share Connection plugin is designed for easy social sharing by letting user choose place/pages to use icons. 9 social network services are supported in this plugin including Facebook and Twitter.
- * Version:     0.1.0
+ * Version:     1.0
  * Author:      WP Shop byGMO
  * Author URI:  http://www.wpshop.com
  * License:     GPLv2
@@ -12,7 +12,7 @@
  */
 
 /**
- * Copyright (c) 2013 Digitalcube Co,.Ltd (https://digitalcube.jp/)
+ * Copyright (c) 2014 WP Shop byGMO (http://www.wpshop.com)
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License, version 2 or, at

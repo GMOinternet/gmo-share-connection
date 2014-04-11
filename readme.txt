@@ -1,18 +1,19 @@
 === GMO Share Connection ===
-Contributors:      megumithemes
-Donate link:       https://digitalcube.jp/
+Contributors:      takeaki-nagashima
+Donate link:       
 Tags:
 Requires at least: 3.8
 Tested up to:      3.8
-Stable tag:        0.1.0
+Stable tag:        1.0
 License:           GPLv2
 License URI:       http://www.gnu.org/licenses/gpl-2.0.html
 
-This is a awesome cool plugin.
+GMO Share Connection plugin is designed for easy social sharing by letting user choose place/pages to use icons.
 
 == Description ==
 
-
+GMO Share Connection plugin is designed for easy social sharing by letting user choose place/pages to use icons.
+9 social network services are supported in this plugin including Facebook and Twitter.
 
 == Installation ==
 
@@ -29,10 +30,10 @@ This is a awesome cool plugin.
 
 == Changelog ==
 
-= 0.1.0 =
+= 1.0 =
 * First release
 
 == Upgrade Notice ==
 
-= 0.1.0 =
+= 1.0 =
 First Release
